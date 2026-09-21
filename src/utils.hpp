@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <random>
+#include <algorithm>
 
 void print_results(ModelResults& results);
 

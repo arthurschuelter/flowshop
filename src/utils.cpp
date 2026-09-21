@@ -5,7 +5,6 @@ void print_results(ModelResults& results) {
     printf("\n=============================================\n");
     printf("Model: %s\n", results.model_name.c_str());
     printf("Optimal Makespan (Cmax): %.2f\n", results.model->get(GRB_DoubleAttr_ObjVal));
-    // printf("Execution Time: %.2f ms\n", duration_ms.count());
     printf("Execution Time: \n");
     for (int i = 0; i < results.elapsed.size(); i++) {
         std::chrono::duration<double, std::milli> duration_ms = results.elapsed[i];

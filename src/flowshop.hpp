@@ -17,10 +17,12 @@ public:
     ~Flowshop() = default;
 
     void addConstraints();
+    void addConstraints_M2();
     void addObjective();
     void addDecisionVariables();
 
     ModelResults* optimize();
+    ModelResults* optimize_Liao();
 
     std::vector<std::vector<GRBVar>> X;
     std::vector<std::vector<GRBVar>> P;

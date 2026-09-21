@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
     int num_machines = 2;
     int num_batches = 5;
 
-    int iterations = 10;
+    int iterations = 25;
     
     Instance inst = generateInstance(num_jobs);
     
@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
         printf("Job %2d | p1: %2d | p2: %2d | s: %2d\n", job.id, job.p1, job.p2, job.s);
     }
         
-    double S_min = 10.0;    // Batch capacity parameter S_min
+    double S_min = 10.0;
     
     // s[j]: Size of job j
     std::vector<double> s;
@@ -42,6 +42,15 @@ int main(int argc, char* argv[]) {
     };
     
     try {
+
+        GRBEnv env_ = GRBEnv(true);
+        env_.set(GRB_IntParam_OutputFlag, 0);
+        env_.start();
+        
+        Flowshop flowshop = Flowshop(env_, num_jobs, num_machines, num_batches, S_min, s, p, "Liao 2008");
+        ModelResults* results = flowshop.optimize_Liao();
+
+
         for (int it = 0; it < iterations; it++) {
             // Liao, Liao 2008
             GRBEnv env = GRBEnv(true);
@@ -49,7 +58,7 @@ int main(int argc, char* argv[]) {
             env.start();
             
             Flowshop flowshop_liao = Flowshop(env, num_jobs, num_machines, num_batches, S_min, s, p, "Liao 2008");
-            ModelResults* results_liao = flowshop_liao.optimize();
+            ModelResults* results_liao = flowshop_liao.optimize_Liao();
             results_liao_final.elapsed.push_back(results_liao->elapsed.back());
             if (results_liao->model->get(GRB_IntAttr_Status) == GRB_OPTIMAL) {
                 results_liao_final.model = results_liao->model;
