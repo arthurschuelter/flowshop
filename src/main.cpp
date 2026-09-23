@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
     int num_machines = 2;
     int num_batches = 5;
 
-    int iterations = 25;
+    int iterations = 30;
     
     Instance inst = generateInstance(num_jobs);
     
@@ -78,8 +78,15 @@ int main(int argc, char* argv[]) {
                 
         }
 
-        print_results(results_liao_final);
-        print_results(results_mine_final);
+        // print_results(results_liao_final);
+        // print_results(results_mine_final);
+
+        printf("run,tempo_liao,tempo_mine\n");
+        for (int i = 0; i < results_liao_final.elapsed.size(); i++) {
+            std::chrono::duration<double, std::milli> duration_liao = results_liao_final.elapsed[i];
+            std::chrono::duration<double, std::milli> duration_mine = results_mine_final.elapsed[i];
+            printf("%d,%.3f,%.3f\n", i+1, duration_liao.count(), duration_mine.count());
+        }
 
     } catch (GRBException& e) {
         std::cerr << "Gurobi error code = " << e.getErrorCode() << "\n";
