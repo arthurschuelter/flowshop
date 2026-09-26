@@ -55,7 +55,7 @@ def plot_wilcoxon_multi_instancia(caminhos_csv, nomes_instancias,
         ax.set_title(f"{nome} (N={len(df)})\nWilcoxon: {p_texto}\n({interpretacao})",
                      fontsize=9, fontweight='bold')
         ax.set_xlabel('')
-        ax.set_ylabel('Tempo de Execução (s)' if ax is axes[0] else '')
+        ax.set_ylabel('Tempo de Execução (ms)' if ax is axes[0] else '')
 
     plt.suptitle('Wilcoxon Signed-Rank por Instância\n"Ausência de evidência ≠ evidência de ausência"',
                   fontsize=11, fontweight='bold', y=1.08)
@@ -153,7 +153,7 @@ def analisar_equivalencia_multi_instancia(caminhos_csv, nomes_instancias,
                     xerr=[[row['diff_mediana']-ic_lower], [ic_upper-row['diff_mediana']]],
                     fmt='o', color='#2c3e50', ecolor='#2c3e50', elinewidth=2.5, capsize=6, markersize=8)
         ax.set_yticks([])
-        ax.set_xlabel('Diferença (s)', fontsize=9)
+        ax.set_xlabel('Diferença (ms)', fontsize=9)
         veredito = "Equivalente" if row['equivalente'] else "Não equiv."
         ax.set_title(f"{nome}\n{veredito} (Holm p={row['p_tost_holm']:.3f})", fontsize=9, fontweight='bold')
 

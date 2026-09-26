@@ -3,8 +3,8 @@
 #include "dataset.hpp"
 
 int main(int argc, char* argv[]) {
-    std::vector<std::string> suffix({"5j", "10j", "15j"});
-    std::vector<int> v_jobs({5, 10, 15});
+    std::vector<std::string> suffix({"5j", "10j", "15j", "20j", "25j"});
+    std::vector<int> v_jobs({5, 10, 15, 20, 25});
     int num_machines = 2;
 
     for (int i = 0; i < v_jobs.size(); ++i) {
