@@ -108,6 +108,14 @@ void Flowshop::addConstraints() {
             );
         }
 
+        // if (m == 1) {
+        //     this->model->addConstr(
+        //         this->C[0][1] == this->C[0][0] + this->P[0][1],
+        //         "FirstBatchCompletion_Redundant_M1"
+        //     );
+        // }
+
+
         // (Generalizes Eq. 10')
         for (int b = 1; b < num_batches; ++b) {
             this->model->addConstr(
@@ -120,7 +128,6 @@ void Flowshop::addConstraints() {
     // Eq. (12'): Makespan definition
     this->model->addConstr(Cmax >= this->C[num_batches - 1][num_machines - 1], "Makespan");
 }
-
 
 void Flowshop::addConstraints_M2() {
     // Eq. (2'): Each job assigned to exactly one batch
@@ -181,11 +188,13 @@ void Flowshop::addConstraints_M2() {
 }
 
 ModelResults* Flowshop::optimize() {
-    auto start = std::chrono::high_resolution_clock::now();
-
+    
     addDecisionVariables();
     addObjective();
     addConstraints();
+    
+    auto start = std::chrono::high_resolution_clock::now();
+    
     this->model->optimize();
 
     auto end = std::chrono::high_resolution_clock::now();
@@ -199,13 +208,15 @@ ModelResults* Flowshop::optimize() {
 }
 
 ModelResults* Flowshop::optimize_Liao() {
-    auto start = std::chrono::high_resolution_clock::now();
-
+    
     addDecisionVariables();
     addObjective();
     addConstraints_M2();
+    
+    auto start = std::chrono::high_resolution_clock::now();
+    
     this->model->optimize();
-
+    
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
 
